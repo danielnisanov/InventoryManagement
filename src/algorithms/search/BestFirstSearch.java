@@ -1,11 +1,12 @@
 package algorithms.search;
 
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
-public class BestFirstSearch extends ASearchingAlgorithm{
+public class BestFirstSearch extends BreadthFirstSearch{
 
+    @Override
+    public Queue<AState> getDataStructure() {
+        return new PriorityQueue<>();
+    }
 
 }

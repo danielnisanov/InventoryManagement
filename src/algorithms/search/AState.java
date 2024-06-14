@@ -22,7 +22,6 @@ public class AState {
         return stateName != null ? stateName.hashCode() : 0;
     }
 
-
     public String getStateName() {
         return stateName;
     }
