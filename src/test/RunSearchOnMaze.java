@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class RunSearchOnMaze {
     public static void main(String[] args) {
         IMazeGenerator mg = new MyMazeGenerator();
-        Maze maze = mg.generate(21, 21);
+        Maze maze = mg.generate(10, 10);
         SearchableMaze searchableMaze = new SearchableMaze(maze);
 
         solveProblem(searchableMaze, new BreadthFirstSearch());

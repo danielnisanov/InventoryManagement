@@ -18,6 +18,9 @@ public class Maze {
         this.goalPosition = new Position(rows - 1, columns - 1);
     }
 
+    /**
+     getters
+     */
     public Position getStartPosition() {
         return startPosition;
     }
@@ -138,5 +141,15 @@ public class Maze {
                 maze[current.getRowIndex()-1][current.getColumnIndex()] = 0;
             }
         }
+    }
+    /**
+     *setters
+     */
+    public void setStartPosition(Position startPosition) {
+        this.startPosition = startPosition;
+    }
+
+    public void setGoalPosition(Position goalPosition) {
+        this.goalPosition = goalPosition;
     }
 }
