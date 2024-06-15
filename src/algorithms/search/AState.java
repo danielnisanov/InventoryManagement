@@ -44,6 +44,10 @@ public abstract class AState implements Serializable,Comparable {
         AState other = ((AState)o);
         return Double.compare(this.cost, other.cost);
     }
+    @Override
+    public String toString(){
+        return this.stateName;
+    }
 
     /**
      getters and setters

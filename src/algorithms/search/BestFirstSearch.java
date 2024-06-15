@@ -7,34 +7,34 @@ public class BestFirstSearch extends BreadthFirstSearch{
         super();
     }
 
+//    @Override
+//    public Solution solve(ISearchable s) {
+//        PriorityQueue<AState> priorityQueue = (PriorityQueue<AState>) getDataStructure();
+//        HashSet<String> visitedString = new HashSet<>();
+//        priorityQueue.add(s.getStartState());
+//        visitedString.add(s.getStartState().toString());
+//
+//        while (!priorityQueue.isEmpty()) {
+//            AState current = priorityQueue.poll();
+//            if (current.equals(s.getGoalState())) {
+//                backwardPath(current, solution);
+//                return solution;
+//            }
+//
+//            List<AState> neighbors = s.getAllPossibleStates(current);
+//            numVisitedNodes++;
+//            for (AState neighbor : neighbors) {
+//                if (!visitedString.contains(neighbor.toString())) {
+//                    neighbor.setCameFrom(current);
+//                    priorityQueue.add(neighbor);
+//                    visitedString.add(neighbor.toString());
+//                }
+//            }
+//        }
+//        return null;
+//    }
     @Override
-    public Solution solve(ISearchable s) {
-        PriorityQueue<AState> priorityQueue = (PriorityQueue<AState>) getDataStructure();
-        HashSet<String> visitedString = new HashSet<>();
-        priorityQueue.add(s.getStartState());
-        visitedString.add(s.getStartState().toString());
-
-        while (!priorityQueue.isEmpty()) {
-            AState current = priorityQueue.poll();
-            if (current.equals(s.getGoalState())) {
-                backwardPath(current, solution);
-                return solution;
-            }
-
-            List<AState> neighbors = s.getAllPossibleStates(current);
-            numVisitedNodes++;
-            for (AState neighbor : neighbors) {
-                if (!visitedString.contains(neighbor.toString())) {
-                    neighbor.setCameFrom(current);
-                    priorityQueue.add(neighbor);
-                    visitedString.add(neighbor.toString());
-                }
-            }
-        }
-        return null;
-    }
-    @Override
-    public Queue<AState> getDataStructure() {
+    public Queue<AState> getStructure() {
         return new PriorityQueue<>();
     }
 

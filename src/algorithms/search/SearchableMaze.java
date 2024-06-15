@@ -8,6 +8,9 @@ public class SearchableMaze implements ISearchable {
 
     private Maze maze;
 
+    /**
+     constructor
+     */
     public SearchableMaze(Maze maze) {
         this.maze = maze;
     }
@@ -51,6 +54,10 @@ public class SearchableMaze implements ISearchable {
 //
 //        return possiblestates;
 //    }
+
+    /**
+     function that returns all the possible moves
+     */
     @Override
     public ArrayList<AState> getAllPossibleStates(AState s) {
         ArrayList<AState> allPossibleStates = new ArrayList<>();

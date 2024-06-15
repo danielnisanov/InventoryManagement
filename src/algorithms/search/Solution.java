@@ -20,6 +20,9 @@ public class Solution implements Serializable {
         this.solPath=solPath;
     }
 
+    /**
+     getter
+     */
     public ArrayList getSolutionPath(){
         return solPath;
     }
