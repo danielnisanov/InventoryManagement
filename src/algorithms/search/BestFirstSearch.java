@@ -7,7 +7,17 @@ public class BestFirstSearch extends BreadthFirstSearch{
         super();
     }
 
-//    @Override
+    @Override
+    public Queue<AState> getStructure() {
+        return new PriorityQueue<>();
+    }
+
+    @Override
+    public String getName() {
+        return "BestFirstSearch";
+    }
+
+    //    @Override
 //    public Solution solve(ISearchable s) {
 //        PriorityQueue<AState> priorityQueue = (PriorityQueue<AState>) getDataStructure();
 //        HashSet<String> visitedString = new HashSet<>();
@@ -33,14 +43,5 @@ public class BestFirstSearch extends BreadthFirstSearch{
 //        }
 //        return null;
 //    }
-    @Override
-    public Queue<AState> getStructure() {
-        return new PriorityQueue<>();
-    }
-
-    @Override
-    public String getName() {
-        return "BestFirstSearch";
-    }
 
 }
