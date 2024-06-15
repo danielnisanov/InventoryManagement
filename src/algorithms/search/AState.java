@@ -1,6 +1,8 @@
 package algorithms.search;
 
-public class AState {
+import java.io.Serializable;
+
+public abstract class AState implements Serializable,Comparable {
     private String stateName;
     private double cost;
     private AState cameFrom;
@@ -8,6 +10,7 @@ public class AState {
     public AState (String stateName){
         this.stateName = stateName;
     }
+
 
     @Override
     public boolean equals (Object o){
@@ -17,9 +20,19 @@ public class AState {
         return stateName != null ? stateName.equals(state1.stateName) : state1.stateName == null;
     }
 
+
     @Override
     public int hashCode(){
         return stateName != null ? stateName.hashCode() : 0;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o == null) {
+            throw new NullPointerException("Cannot compare to null");
+        }
+        AState other = ((AState)o);
+        return Double.compare(this.cost, other.cost);
     }
 
     public String getStateName() {
@@ -45,4 +58,5 @@ public class AState {
     public void setCameFrom(AState cameFrom) {
         this.cameFrom = cameFrom;
     }
+
 }

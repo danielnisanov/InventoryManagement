@@ -11,7 +11,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
     }
 
     @Override
-    public Solution search(ISearchable s) {
+    public Solution solve(ISearchable s) {
         LinkedHashSet<String> visitedString = new LinkedHashSet<>();
         Queue<AState> statesQueue = getDataStructure();
         statesQueue.add(s.getStartState());
@@ -20,6 +20,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
         while (!statesQueue.isEmpty()) {
             AState current = statesQueue.remove();
             if (current.equals(s.getGoalState())) {
+                solution = new Solution();
                 backwardPath(current, solution);
                 return solution;
             }
@@ -37,7 +38,14 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
         return null;
     }
 
+
+
     public Queue<AState> getDataStructure() {
         return new LinkedList<>();
+    }
+
+    @Override
+    public String getName() {
+        return "BreadthFirstSearch";
     }
 }

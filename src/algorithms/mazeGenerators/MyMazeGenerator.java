@@ -108,3 +108,6 @@ public class MyMazeGenerator extends AMazeGenerator {
         return row >= 0 && row < maze.getRows() && col >= 0 && col < maze.getColumns();
     }
 }
+
+
+
