@@ -5,5 +5,4 @@ public interface ISearchingAlgorithm {
      int getNumVisitedNodes();
     String getName();
 
-
 }

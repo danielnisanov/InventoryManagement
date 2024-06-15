@@ -4,10 +4,14 @@ import algorithms.mazeGenerators.Position;
 
 public class MazeState extends AState{
 
+    //FIXME
     //TODO NEW
 
     private Position position;
 
+    /**
+     constructor
+     */
     public MazeState(Position position) {
         super(position.toString());
         this.position = position;

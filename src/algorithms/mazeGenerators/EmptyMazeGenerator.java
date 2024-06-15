@@ -1,6 +1,9 @@
 package algorithms.mazeGenerators;
 
 public class EmptyMazeGenerator extends AMazeGenerator{
+    /**
+     override of generate function - returns an instance of an empty Maze
+     */
     @Override
     public Maze generate (int rows, int columns){
         if (rows < 1 || columns < 1)

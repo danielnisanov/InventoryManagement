@@ -6,19 +6,31 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
     protected Solution solution;
     protected int numVisitedNodes;
 
+    /**
+     constructor
+     */
     public ASearchingAlgorithm(){
         this.solution = new Solution();
         this.numVisitedNodes = 0;
     }
 
+    /**
+     function that return solution of the maze
+     */
     public Solution getSolution() {
         return solution;
     }
 
+    /**
+     function that return the number of visited nodes
+     */
     public int getNumVisitedNodes() {
         return numVisitedNodes;
     }
 
+    /**
+     function that reverses the path that was found
+     */
     public void backwardPath(AState s, Solution sol) {
         Stack<AState> stackSol=new Stack<>();
         AState curr=s;
@@ -33,4 +45,5 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
                 sol.AddState(stackSol.pop());
             }
         }
-    }}
+    }
+}

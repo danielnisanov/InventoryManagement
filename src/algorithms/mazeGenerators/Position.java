@@ -4,6 +4,9 @@ public class Position {
     private int row;
     private int column;
 
+    /**
+     constructor
+     */
     public Position(int row, int column) {
         this.row = row;
         this.column = column;
@@ -17,6 +20,9 @@ public class Position {
         return column;
     }
 
+    /**
+     function that compare between 2 position to check if they are the same
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,6 +42,5 @@ public class Position {
     public int hashCode() {
         return 31 * row + column;
     }
-
 
 }

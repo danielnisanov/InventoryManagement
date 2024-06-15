@@ -6,6 +6,10 @@ public class Maze {
     private Position startPosition;
     private Position goalPosition;
     private int[][] maze;
+
+    /**
+    constructor
+     */
     public Maze(int rows, int columns){
         this.rows = rows;
         this.columns = columns;
@@ -22,6 +26,10 @@ public class Maze {
         return goalPosition;
     }
 
+    /**
+     print function -
+     The entrance point to the maze is marked with 'S' and the exit point is marked with 'E'
+     */
     public void print() {
         int rows = maze.length;
         int cols = maze[0].length;
@@ -55,7 +63,9 @@ public class Maze {
         return maze[position.getRowIndex()][position.getColumnIndex()];
     }
 
-
+    /**
+     function to set 1 that means a wall in the maze
+     */
     public void setOne(int row, int column) {
         this.maze[row][column] = 1;
     }
@@ -65,6 +75,9 @@ public class Maze {
         this.maze[position.getRowIndex()][position.getColumnIndex()] = 1;
     }
 
+    /**
+     function to set 0 that means a path in the maze
+     */
     public void setZero(int row, int column) {
         this.maze[row][column] = 0;
     }
@@ -86,12 +99,18 @@ public class Maze {
         return maze;
     }
 
+    /**
+     function to check if position is a valid position in the maze(inside the boundaries)
+     */
     public boolean isValidPosition(Position position){
         int row = position.getRowIndex();
         int col = position.getColumnIndex();
         return row >= 0 && row < maze.length && col >= 0 && col < maze[0].length;
     }
 
+    /**
+     function that use to move in the DFS - can change the value of position from 1 to 0
+     */
     public void moveDFS(Position current, Position next){
         if(!isValidPosition(next)) {
             return;
@@ -120,6 +139,4 @@ public class Maze {
             }
         }
     }
-
-
 }

@@ -3,9 +3,12 @@ package algorithms.mazeGenerators;
 import java.util.Random;
 
 public class SimpleMazeGenerator extends AMazeGenerator{
+    /**
+     override of generate function - returns an instance of random Maze
+     */
     @Override
     public Maze generate (int rows, int columns) {
-        //   validateInput(rows, columns); //TODO
+        //validateInput(rows, columns); //TODO
         if (rows < 1 || columns < 1)
             return new Maze(1, 1); //TODO
         Maze newMaze = new Maze(rows,columns);
@@ -26,7 +29,6 @@ public class SimpleMazeGenerator extends AMazeGenerator{
         for (int row = 0; row < newMaze.getGoalPosition().getRowIndex(); row++) {
             newMaze.setZero(row, columns - 1);
         }
-
         return newMaze;
     }
 

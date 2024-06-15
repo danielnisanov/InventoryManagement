@@ -7,11 +7,16 @@ public abstract class AState implements Serializable,Comparable {
     private double cost;
     private AState cameFrom;
 
+    /**
+     constructor
+     */
     public AState (String stateName){
         this.stateName = stateName;
     }
 
-
+    /**
+     override equals
+     */
     @Override
     public boolean equals (Object o){
         if(this == o) return true;
@@ -20,12 +25,17 @@ public abstract class AState implements Serializable,Comparable {
         return stateName != null ? stateName.equals(state1.stateName) : state1.stateName == null;
     }
 
-
+    /**
+     override hash code
+     */
     @Override
     public int hashCode(){
         return stateName != null ? stateName.hashCode() : 0;
     }
 
+    /**
+     override compare to
+     */
     @Override
     public int compareTo(Object o) {
         if (o == null) {
@@ -35,6 +45,9 @@ public abstract class AState implements Serializable,Comparable {
         return Double.compare(this.cost, other.cost);
     }
 
+    /**
+     getters and setters
+     */
     public String getStateName() {
         return stateName;
     }

@@ -8,6 +8,9 @@ import java.util.Stack;
 
 public class MyMazeGenerator extends AMazeGenerator {
 
+    /**
+     override of generate function - returns an instance of Maze using DFS algorithm
+     */
     @Override
     public Maze generate(int rows, int columns) {
         Maze newMaze = new Maze(rows, columns);
@@ -16,29 +19,35 @@ public class MyMazeGenerator extends AMazeGenerator {
                 newMaze.setOne(i,j);
             }
         }
-        Random random = new Random();
-
         // Initialize start and end positions
         Position start = new Position(0, 0);
         Position end = new Position(rows - 1, columns - 1);
+
+        Random random = new Random();
 
         // Create stack for DFS algorithm
         Stack<Position> stack = new Stack<>();
         stack.push(start);
         newMaze.setZero(start);
 
-
-
+        List<Position> neighbors;
         while (!stack.isEmpty()) {
             Position current = stack.pop();
-            List<Position> neighbors = getUnvisitedNeighbors(newMaze, current);
+            newMaze.setZero(current); //NEW
+            neighbors = getUnvisitedNeighbors(newMaze, current);
             if (!neighbors.isEmpty()) {
-                Collections.shuffle(neighbors, random); // Shuffle to randomize neighbor selection
-                Position next = neighbors.get(0); // Pick the first neighbor
-                newMaze.setZero(next);
-                stack.push(current); // Push current cell back onto the stack
-                newMaze.moveDFS(current, next); // Remove wall between current and next
-                stack.push(next); // Push next cell onto the stack
+                //Collections.shuffle(neighbors, random); // Shuffle to randomize neighbor selection
+                //Position next = neighbors.get(0); // Pick the first neighbor
+                //newMaze.setZero(next);
+                //stack.push(current); // Push current cell back onto the stack
+                //newMaze.moveDFS(current, next); // Remove wall between current and next
+                //stack.push(next); // Push next cell onto the stack
+                stack.push(current);
+                Collections.shuffle(neighbors, random);
+                Position next = neighbors.get(0);
+                newMaze.moveDFS(current, next);
+                current = next;
+                stack.push(current);
             }
         }
 
@@ -76,6 +85,10 @@ public class MyMazeGenerator extends AMazeGenerator {
         return neighbors;
     }
 
+    /**
+     add random walls or paths
+     (only instead 1 - not damage the path we created)
+     */
     private void addRandomPathsAndWalls(Maze maze) {
         Random random = new Random();
         int numRandomChanges = (int) Math.sqrt(maze.getRows() * maze.getColumns());
@@ -89,7 +102,9 @@ public class MyMazeGenerator extends AMazeGenerator {
         }
     }
 
-
+    /**
+     function to ensure that there is a path to the end point
+     */
     private void ensureEndPath(Maze maze, Position end) {
         int endRow = end.getRowIndex();
         int endCol = end.getColumnIndex();
@@ -102,6 +117,9 @@ public class MyMazeGenerator extends AMazeGenerator {
         }
     }
 
+    /**
+     boolean function to check if position is valid
+     */
     private boolean isValidPosition(Maze maze, Position position) {
         int row = position.getRowIndex();
         int col = position.getColumnIndex();
