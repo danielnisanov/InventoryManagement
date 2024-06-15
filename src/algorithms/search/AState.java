@@ -13,6 +13,11 @@ public abstract class AState implements Serializable,Comparable {
     public AState (String stateName){
         this.stateName = stateName;
     }
+    public AState (String stateName, double cost){
+        this.stateName = stateName;
+        this.cost = cost;
+    }
+
 
     /**
      override equals

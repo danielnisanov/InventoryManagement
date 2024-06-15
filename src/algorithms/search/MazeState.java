@@ -16,6 +16,10 @@ public class MazeState extends AState{
         super(position.toString());
         this.position = position;
     }
+    public MazeState(Position position, double cost) {
+        super(position.toString(), cost);
+        this.position = position;
+    }
 
     public boolean equals(Object o) {
         if (this == o) return true;
