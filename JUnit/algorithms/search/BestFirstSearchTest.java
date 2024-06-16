@@ -1,4 +1,4 @@
-package algorithms.search;
+import algorithms.search.*;
 import algorithms.mazeGenerators.*;
 import org.junit.jupiter.api.Test;
 
@@ -61,6 +61,31 @@ class BestFirstSearchTest {
         assertTrue(solution.getSolutionPath().size() > 0);
         assertEquals(maze.getStartPosition().toString(), solution.getSolutionPath().get(0).toString());
         assertEquals(maze.getGoalPosition().toString(), solution.getSolutionPath().get(solution.getSolutionPath().size() - 1).toString());
+    }
+
+    @Test
+    void testBestFirstSearch_NullSearchable() {
+        BestFirstSearch bestFirstSearch = new BestFirstSearch();
+        assertThrows(NullPointerException.class, () -> {
+            bestFirstSearch.solve(null);
+        });
+    }
+
+
+
+    @Test
+    void testBestFirstSearch_NonSquareMaze() {
+        MyMazeGenerator mg = new MyMazeGenerator();
+        Maze maze = mg.generate(5, 10);
+        SearchableMaze searchableMaze = new SearchableMaze(maze);
+        BestFirstSearch bestFirstSearch = new BestFirstSearch();
+
+        Solution solution = bestFirstSearch.solve(searchableMaze);
+
+        assertNotNull(solution);
+        assertTrue(solution.getSolutionPath().size() > 0);
+        assertEquals(maze.getStartPosition(), ((AState) solution.getSolutionPath().get(0)).getCurrentPos());
+        assertEquals(maze.getGoalPosition(), ((AState) solution.getSolutionPath().get(solution.getSolutionPath().size() - 1)).getCurrentPos());
     }
 
 }

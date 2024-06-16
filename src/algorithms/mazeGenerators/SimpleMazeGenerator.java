@@ -8,9 +8,8 @@ public class SimpleMazeGenerator extends AMazeGenerator{
      */
     @Override
     public Maze generate (int rows, int columns) {
-        //validateInput(rows, columns); //TODO
         if (rows < 1 || columns < 1)
-            return new Maze(1, 1); //TODO
+            return new Maze(1, 1);
         Maze newMaze = new Maze(rows,columns);
         for (int i=0; i<rows; i++){
             for (int j=0; j<columns; j++){
@@ -32,9 +31,4 @@ public class SimpleMazeGenerator extends AMazeGenerator{
         return newMaze;
     }
 
-//    protected void validateInput(int rows, int columns) {
-//        if (rows <= 0 || columns <= 0) {
-//            throw new IllegalArgumentException("Rows and columns must be greater than zero.");
-//        }
-//    }
 }

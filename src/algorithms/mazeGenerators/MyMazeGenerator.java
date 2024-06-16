@@ -11,8 +11,13 @@ public class MyMazeGenerator extends AMazeGenerator {
     /**
      * Override of generate function - returns an instance of Maze using DFS algorithm.
      */
+
     @Override
     public Maze generate(int rows, int columns) {
+        if (rows < 1 || columns < 1) {
+            return new Maze(1, 1);  // Return a minimal valid maze
+        }
+
         Maze newMaze = new Maze(rows, columns);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -176,92 +181,3 @@ public class MyMazeGenerator extends AMazeGenerator {
         return row >= 0 && row < maze.getRows() && col >= 0 && col < maze.getColumns();
     }
 }
-
-//
-//package algorithms.mazeGenerators;
-//
-//import java.util.*;
-//
-//public class MyMazeGenerator extends AMazeGenerator {
-//    /**
-//     * @param rows represents the number of rows that will be on our maze.
-//     * @param columns represents the number of columns that will be on our maze.
-//     * @return new maze that generated base on randomized Prim's algorithm.
-//     */
-//    @Override
-//    public Maze generate(int rows, int columns) {
-//        if (rows < 1 || columns < 1) return new Maze(1, 1);
-//        Maze newMaze = new Maze(rows, columns);
-//        Stack<Position> path = new Stack<>();
-//        ArrayList<Position> neighbours;
-//        ArrayList<Position> fixedNeighbours = new ArrayList<>();
-//        Position currCell;
-//        for (int i = 0; i < rows; i++)
-//            for (int j = 0; j < columns; j++)
-//                newMaze.setOne(i, j);
-//        newMaze.setZero(0, 0);
-//        path.push(newMaze.getStartPosition());
-//        while (!path.isEmpty())
-//        {
-//            fixedNeighbours.clear();
-//            currCell = path.pop();
-//            if(currCell.equals(newMaze.getGoalPosition()))
-//                continue;
-//            neighbours = findWalls(newMaze, currCell);
-//            for(Position position : neighbours)
-//                if(getDivided(newMaze, position) == 1) fixedNeighbours.add(position);
-//            if(fixedNeighbours.size() >= 1)
-//            {
-//                path.push(currCell);
-//                currCell = pickRandomPosition(fixedNeighbours);
-//                newMaze.setZero(currCell.getRowIndex(), currCell.getColumnIndex());
-//                path.push(currCell);
-//            }
-//        }
-//        if(newMaze.getValue(newMaze.getGoalPosition().getRowIndex(), newMaze.getGoalPosition().getColumnIndex()) == 1) return generate(rows, columns);
-//        return newMaze;
-//    }
-//
-//    /**
-//     * @param maze the maze in which to look for neighbors.
-//     * @param position the position to check.
-//     * @return the number of neighbors that are passages.
-//     */
-//    private int getDivided(Maze maze, Position position)
-//    {
-//        int divided = 0;
-//        if(maze.getValue(position.getRowIndex() + 1, position.getColumnIndex()) == 0) // DOWN
-//            divided ++;
-//        if(maze.getValue(position.getRowIndex() - 1, position.getColumnIndex()) == 0) // UP
-//            divided ++;
-//        if(maze.getValue(position.getRowIndex(), position.getColumnIndex() + 1) == 0) // RIGHT
-//            divided ++;
-//        if(maze.getValue(position.getRowIndex(), position.getColumnIndex() - 1) == 0) // LEFT
-//            divided ++;
-//        return divided;
-//    }
-//
-//    /**
-//     * @param maze the maze in which to look for walls.
-//     * @param position the position to check.
-//     * @return an ArrayList containing all the walls around the given position.
-//     */
-//    private ArrayList<Position> findWalls(Maze maze, Position position)
-//    {
-//        ArrayList<Position> wallsList = new ArrayList<>();
-//        if(maze.getValue(position.getRowIndex() + 1, position.getColumnIndex()) == 1) // UP
-//            wallsList.add(new Position(position.getRowIndex() + 1, position.getColumnIndex()));
-//        if(maze.getValue(position.getRowIndex() - 1, position.getColumnIndex()) == 1) // DOWN
-//            wallsList.add(new Position(position.getRowIndex() - 1, position.getColumnIndex()));
-//        if(maze.getValue(position.getRowIndex(), position.getColumnIndex() + 1) == 1) // RIGHT
-//            wallsList.add(new Position(position.getRowIndex(), position.getColumnIndex() + 1));
-//        if(maze.getValue(position.getRowIndex(), position.getColumnIndex() - 1) == 1) // LEFT
-//            wallsList.add(new Position(position.getRowIndex(), position.getColumnIndex() - 1));
-//        return wallsList;
-//    }
-//    private Position pickRandomPosition(ArrayList<Position> positions)
-//    {
-//        Random random = new Random();
-//        return positions.get(random.nextInt(positions.size()));
-//    }
-//}

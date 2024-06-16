@@ -61,6 +61,8 @@ public abstract class AState implements Serializable,Comparable {
 
     @Override
     public String toString() {
+        if (this.currentPos != null)
         return this.currentPos.toString();
+        else return "";
     }
 }
