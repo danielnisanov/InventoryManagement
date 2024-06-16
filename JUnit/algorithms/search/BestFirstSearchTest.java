@@ -1,7 +1,7 @@
+package algorithms.search;
 import algorithms.search.*;
 import algorithms.mazeGenerators.*;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class BestFirstSearchTest {
@@ -70,8 +70,6 @@ class BestFirstSearchTest {
             bestFirstSearch.solve(null);
         });
     }
-
-
 
     @Test
     void testBestFirstSearch_NonSquareMaze() {

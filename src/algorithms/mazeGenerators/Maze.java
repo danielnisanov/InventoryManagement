@@ -1,5 +1,8 @@
 package algorithms.mazeGenerators;
 
+/**
+ * Represents a maze with a grid of cells, start position, and goal position.
+ */
 public class Maze {
     private int rows;
     private int columns;
@@ -8,9 +11,13 @@ public class Maze {
     private int[][] maze;
 
     /**
-    constructor
+     * Constructor to initialize the maze with specified rows and columns.
+     * Sets the start position to (0, 0) and goal position to (rows-1, columns-1).
+     *
+     * @param rows    The number of rows in the maze.
+     * @param columns The number of columns in the maze.
      */
-    public Maze(int rows, int columns){
+    public Maze(int rows, int columns) {
         if (rows > 0 && columns > 0) {
             this.rows = rows;
             this.columns = columns;
@@ -21,19 +28,25 @@ public class Maze {
     }
 
     /**
-     getters
+     * Gets the start position of the maze.
+     *
+     * @return The start position.
      */
     public Position getStartPosition() {
         return startPosition;
     }
 
+    /**
+     * Gets the goal position of the maze.
+     *
+     * @return The goal position.
+     */
     public Position getGoalPosition() {
         return goalPosition;
     }
 
     /**
-     print function -
-     The entrance point to the maze is marked with 'S' and the exit point is marked with 'E'
+     * Prints the maze with 'S' marking the start position and 'E' marking the goal position.
      */
     public void print() {
         int rows = maze.length;
@@ -42,73 +55,117 @@ public class Maze {
         for (int i = 0; i < rows; i++) {
             System.out.print("[ ");
             for (int j = 0; j < cols; j++) {
-                if (i == startPosition.getRowIndex() && j == startPosition.getRowIndex()) {
+                if (i == startPosition.getRowIndex() && j == startPosition.getColumnIndex()) {
                     System.out.print("S ");
-                }
-                else if (i == goalPosition.getRowIndex() && j == goalPosition.getRowIndex()) {
+                } else if (i == goalPosition.getRowIndex() && j == goalPosition.getColumnIndex()) {
                     System.out.print("E ");
-                }
-                else
+                } else {
                     System.out.print(maze[i][j] + " ");
+                }
             }
             System.out.print("]");
             System.out.println();
         }
     }
 
+    /**
+     * Gets the value at the specified cell.
+     *
+     * @param row    The row index.
+     * @param column The column index.
+     * @return The value at the specified cell, or -1 if out of bounds.
+     */
     public int getValue(int row, int column) {
-        if (row < 0 || row >= rows || column < 0 || column >= columns)
+        if (row < 0 || row >= rows || column < 0 || column >= columns) {
             return -1;
+        }
         return maze[row][column];
     }
 
+    /**
+     * Gets the value at the specified position.
+     *
+     * @param position The position to get the value from.
+     * @return The value at the specified position, or -1 if out of bounds.
+     */
     public int getValue(Position position) {
-        if (position.getRowIndex() < 0 || position.getRowIndex() >= rows || position.getColumnIndex() < 0 || position.getColumnIndex() >= columns)
+        if (position.getRowIndex() < 0 || position.getRowIndex() >= rows || position.getColumnIndex() < 0 || position.getColumnIndex() >= columns) {
             return -1;
+        }
         return maze[position.getRowIndex()][position.getColumnIndex()];
     }
 
     /**
-     function to set 1 that means a wall in the maze
+     * Sets the value at the specified cell to 1, indicating a wall.
+     *
+     * @param row    The row index.
+     * @param column The column index.
      */
     public void setOne(int row, int column) {
         this.maze[row][column] = 1;
     }
 
+    /**
+     * Sets the value at the specified position to 1, indicating a wall.
+     *
+     * @param position The position to set the value at.
+     */
     public void setOne(Position position) {
-
         this.maze[position.getRowIndex()][position.getColumnIndex()] = 1;
     }
 
     /**
-     function to set 0 that means a path in the maze
+     * Sets the value at the specified cell to 0, indicating a path.
+     *
+     * @param row    The row index.
+     * @param column The column index.
      */
     public void setZero(int row, int column) {
         this.maze[row][column] = 0;
     }
 
+    /**
+     * Sets the value at the specified position to 0, indicating a path.
+     *
+     * @param position The position to set the value at.
+     */
     public void setZero(Position position) {
-
         this.maze[position.getRowIndex()][position.getColumnIndex()] = 0;
     }
 
+    /**
+     * Gets the number of rows in the maze.
+     *
+     * @return The number of rows.
+     */
     public int getRows() {
         return rows;
     }
 
+    /**
+     * Gets the number of columns in the maze.
+     *
+     * @return The number of columns.
+     */
     public int getColumns() {
         return columns;
     }
 
+    /**
+     * Gets the maze grid.
+     *
+     * @return The maze grid.
+     */
     public int[][] getMaze() {
         return maze;
     }
 
     /**
-     function to check if position is a valid position in the maze(inside the boundaries)
+     * Checks if a position is valid within the maze boundaries.
+     *
+     * @param position The position to check.
+     * @return True if the position is valid, false otherwise.
      */
-
-
     public boolean isValidPosition(Position position) {
         return (position != null &&
                 0 <= position.getRowIndex() && position.getRowIndex() < this.rows &&
@@ -116,43 +173,51 @@ public class Maze {
     }
 
     /**
-     function that use to move in the DFS - can change the value of position from 1 to 0
+     * Moves in the DFS algorithm by changing the value of the position from 1 to 0.
+     *
+     * @param current The current position.
+     * @param next    The next position to move to.
      */
-    public void moveDFS(Position current, Position next){
-        if(!isValidPosition(next)) {
+    public void moveDFS(Position current, Position next) {
+        if (!isValidPosition(next)) {
             return;
         }
 
-        if(next.getRowIndex() == current.getRowIndex())
-        {
-            //go right
-            if(next.getColumnIndex() > current.getColumnIndex()){
-                maze[current.getRowIndex()][current.getColumnIndex()+1] = 0;
+        if (next.getRowIndex() == current.getRowIndex()) {
+            // Move right
+            if (next.getColumnIndex() > current.getColumnIndex()) {
+                maze[current.getRowIndex()][current.getColumnIndex() + 1] = 0;
             }
-            //go left
-            else{
-                maze[current.getRowIndex()][current.getColumnIndex()-1] = 0;
-            }
-        }
-        else if(next.getColumnIndex() == current.getColumnIndex())
-        {
-            //go down
-            if(next.getRowIndex() > current.getRowIndex()){
-                maze[current.getRowIndex()+1][current.getColumnIndex()] = 0;
-            }
-            //go up
+            // Move left
             else {
-                maze[current.getRowIndex()-1][current.getColumnIndex()] = 0;
+                maze[current.getRowIndex()][current.getColumnIndex() - 1] = 0;
+            }
+        } else if (next.getColumnIndex() == current.getColumnIndex()) {
+            // Move down
+            if (next.getRowIndex() > current.getRowIndex()) {
+                maze[current.getRowIndex() + 1][current.getColumnIndex()] = 0;
+            }
+            // Move up
+            else {
+                maze[current.getRowIndex() - 1][current.getColumnIndex()] = 0;
             }
         }
     }
+
     /**
-     *setters
+     * Sets the start position of the maze.
+     *
+     * @param startPosition The start position to set.
      */
     public void setStartPosition(Position startPosition) {
         this.startPosition = startPosition;
     }
 
+    /**
+     * Sets the goal position of the maze.
+     *
+     * @param goalPosition The goal position to set.
+     */
     public void setGoalPosition(Position goalPosition) {
         this.goalPosition = goalPosition;
     }
