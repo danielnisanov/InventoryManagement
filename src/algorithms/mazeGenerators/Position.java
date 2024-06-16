@@ -36,11 +36,5 @@ public class Position {
         return "{"+ row + "," + column + "}";
     }
 
-    //TODO NEW
-
-    @Override
-    public int hashCode() {
-        return 31 * row + column;
-    }
 
 }

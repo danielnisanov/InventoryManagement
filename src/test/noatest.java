@@ -11,9 +11,11 @@ import java.util.ArrayList;
 public class noatest {
     public static void main(String[] args) {
         IMazeGenerator mg = new MyMazeGenerator();
-        Maze maze = mg.generate(6, 6);
+        Maze maze = mg.generate(5, 5);
         maze.print();
+        System.out.println(1111);
         SearchableMaze searchableMaze = new SearchableMaze(maze);
+        System.out.println(2222);
         solveProblem(searchableMaze, new BreadthFirstSearch());
         solveProblem(searchableMaze, new DepthFirstSearch());
         solveProblem(searchableMaze, new BestFirstSearch());

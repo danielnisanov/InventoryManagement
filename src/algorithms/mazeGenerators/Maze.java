@@ -11,11 +11,13 @@ public class Maze {
     constructor
      */
     public Maze(int rows, int columns){
-        this.rows = rows;
-        this.columns = columns;
-        this.maze = new int[rows][columns];
-        this.startPosition = new Position(0, 0);
-        this.goalPosition = new Position(rows - 1, columns - 1);
+        if (rows > 0 && columns > 0) {
+            this.rows = rows;
+            this.columns = columns;
+            this.maze = new int[rows][columns];
+            this.startPosition = new Position(0, 0);
+            this.goalPosition = new Position(rows - 1, columns - 1);
+        }
     }
 
     /**
@@ -105,10 +107,12 @@ public class Maze {
     /**
      function to check if position is a valid position in the maze(inside the boundaries)
      */
-    public boolean isValidPosition(Position position){
-        int row = position.getRowIndex();
-        int col = position.getColumnIndex();
-        return row >= 0 && row < maze.length && col >= 0 && col < maze[0].length;
+
+
+    public boolean isValidPosition(Position position) {
+        return (position != null &&
+                0 <= position.getRowIndex() && position.getRowIndex() < this.rows &&
+                0 <= position.getColumnIndex() && position.getColumnIndex() < this.columns);
     }
 
     /**

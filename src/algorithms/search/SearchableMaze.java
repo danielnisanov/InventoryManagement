@@ -1,102 +1,4 @@
-//package algorithms.search;
-//
-//import algorithms.mazeGenerators.Maze;
-//import algorithms.mazeGenerators.Position;
-//import java.util.ArrayList;
-//
-//public class SearchableMaze implements ISearchable {
-//
-//    private Maze maze;
-//
-//    /**
-//     constructor
-//     */
-//    public SearchableMaze(Maze maze) {
-//        this.maze = maze;
-//    }
-//
-//    @Override
-//    public AState getStartState() {
-//        // Create a new MazeState instance representing the start position
-//        return new MazeState(maze.getStartPosition());
-//    }
-//
-//    @Override
-//    public AState getGoalState() {
-//        // Create a new MazeState instance representing the goal position
-//        return new MazeState(maze.getGoalPosition());
-//    }
-//
-// //   @Override
-////    public ArrayList<AState> getAllPossibleStates(AState state) {
-////        ArrayList<AState> possiblestates = new ArrayList<>();
-////        if (!(state instanceof MazeState)) {
-////            return possiblestates; // Return empty list if state is not MazeState
-////        }
-////
-////        // Extract position from MazeState
-////        Position currentPosition = ((MazeState) state).getPosition();
-////
-////        // Generate possible moves (up, down, left, right)
-////        // Assuming movements are allowed only to empty cells (0) in the maze
-////        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-////        for (int[] direction : directions) {
-////            int newRow = currentPosition.getRowIndex() + direction[0];
-////            int newCol = currentPosition.getColumnIndex() + direction[1];
-////            Position neighborPosition = new Position(newRow, newCol);
-////
-////            // Check if the neighbor position is valid and accessible (maze cell value is 0)
-////            if (maze.isValidPosition(neighborPosition) && maze.getValue(neighborPosition) == 0) {
-////                MazeState neighborState = new MazeState(neighborPosition);
-////                possiblestates.add(neighborState);
-////            }
-////        }
-////
-////        return possiblestates;
-////    }
-//
-//    /**
-//     function that returns all the possible moves
-//     */
-//    @Override
-//    public ArrayList<AState> getAllPossibleStates(AState s) {
-//        ArrayList<AState> allPossibleStates = new ArrayList<>();
-//
-//        if (!(s instanceof MazeState)) {
-//            return allPossibleStates; // Return empty list if state is not MazeState
-//        }
-//
-//        MazeState currentState = (MazeState) s;
-//        Position currentPosition = currentState.getPosition();
-//        int currentRow = currentPosition.getRowIndex();
-//        int currentCol = currentPosition.getColumnIndex();
-//
-//        // Define movement directions
-//        int[][] directions = {
-//                {-1, 0, 10},   // up
-//                {1, 0, 10},    // down
-//                {0, -1, 10},   // left
-//                {0, 1, 10},    // right
-//                {-1, 1, 15},   // upRight
-//                {-1, -1, 15},  // upLeft
-//                {1, 1, 15},    // downRight
-//                {1, -1, 15}    // downLeft
-//        };
-//
-//        // Iterate over each direction
-//        for (int[] dir : directions) {
-//            int newRow = currentRow + dir[0];
-//            int newCol = currentCol + dir[1];
-//
-//            if (maze.isValidPosition(new Position(newRow, newCol)) && maze.getValue(new Position(newRow, newCol)) == 0) {
-//                allPossibleStates.add(new MazeState(new Position(newRow, newCol)));
-//            }
-//        }
-//
-//        return allPossibleStates;
-//    }
-//
-//}
+
 
 
 package algorithms.search;
@@ -105,83 +7,88 @@ import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 
 import java.util.ArrayList;
+import java.util.Map;
 
-public class SearchableMaze implements ISearchable{
+public class SearchableMaze implements ISearchable {
     private Maze maze;
+    private MazeState start;
+    private MazeState end;
 
     /**
      * @param maze the maze object to make searchable
      */
     public SearchableMaze(Maze maze) {
+        this.end = new MazeState(maze.getGoalPosition(), 0, null);
+        this.start = new MazeState(maze.getStartPosition(), 0, null);
         this.maze = maze;
     }
-    public int getMazeRows() { return maze.getRows(); }
-    public int getMazeColumns() { return maze.getColumns(); }
+
+    public int getMazeRows() {
+        return maze.getRows();
+    }
+
+    public int getMazeColumns() {
+        return maze.getColumns();
+    }
+
     @Override
     public AState getStartState() {
-        return new MazeState(maze.getStartPosition());
+        return this.start;
     }
 
     @Override
     public AState getGoalState() {
-        return new MazeState(maze.getGoalPosition());
+        return this.end;
     }
 
+
+
     @Override
-    public ArrayList<AState> getAllPossibleStates(AState currState) {
-        if(currState == null) return null;
-        return getAvailableNeighbours(currState);
-    }
-    /**
-     * @param state the state to find available neighbours for
-     * @return a list of all available neighbours of the given state
-     */
-    private ArrayList<AState> getAvailableNeighbours(AState state)
-    {
-        ArrayList<AState> neighbourList = new ArrayList<>();
-        Position position = ((MazeState)state).getPosition();
-        Position newPos;
-        boolean up = false, down = false, left = false, right = false;
-        if(maze.getValue(position.getRowIndex() - 1, position.getColumnIndex()) == 0) // UP
-        {
-            newPos = new Position(position.getRowIndex() - 1, position.getColumnIndex());
-            neighbourList.add(new MazeState(newPos, state.getCost() + 10));
-            up = true;
-        }
-        if(maze.getValue(position.getRowIndex() + 1, position.getColumnIndex()) == 0) // DOWN
-        {
-            newPos = new Position(position.getRowIndex() + 1, position.getColumnIndex());
-            neighbourList.add(new MazeState(newPos, state.getCost() + 10));
-            down = true;
-        }
-        if(maze.getValue(position.getRowIndex(), position.getColumnIndex() + 1) == 0) // RIGHT
-        {
-            newPos = new Position(position.getRowIndex(), position.getColumnIndex() + 1);
-            neighbourList.add(new MazeState(newPos, state.getCost() + 10));
-            right = true;
-        }
-        if(maze.getValue(position.getRowIndex(), position.getColumnIndex() - 1) == 0) // LEFT
-        {
-            newPos = new Position(position.getRowIndex(), position.getColumnIndex() - 1);
-            neighbourList.add(new MazeState(newPos, state.getCost() + 10));
-            left = true;
-        }
-        if((maze.getValue(position.getRowIndex() + 1, position.getColumnIndex() + 1) == 0) && (down || right)) {
-            newPos = new Position(position.getRowIndex() + 1, position.getColumnIndex() + 1);
-            neighbourList.add(new MazeState(newPos, state.getCost() + 15));
-        }
-        if((maze.getValue(position.getRowIndex() + 1, position.getColumnIndex() - 1) == 0) && (down || left)) {
-            newPos = new Position(position.getRowIndex() + 1, position.getColumnIndex() - 1);
-            neighbourList.add(new MazeState(newPos, state.getCost() + 15));
-        }
-        if((maze.getValue(position.getRowIndex() - 1, position.getColumnIndex() + 1) == 0) && (up || right)) {
-            newPos = new Position(position.getRowIndex() - 1, position.getColumnIndex() + 1);
-            neighbourList.add(new MazeState(newPos, state.getCost() + 15));
-        }
-        if((maze.getValue(position.getRowIndex() - 1, position.getColumnIndex() - 1) == 0) && (up || left)) {
-            newPos = new Position(position.getRowIndex() - 1, position.getColumnIndex() - 1);
-            neighbourList.add(new MazeState(newPos, state.getCost() + 15));
-        }
-        return neighbourList;
+    public ArrayList<AState> getAllPossibleStates(AState s) {
+        ArrayList<AState> allPossibleStates = new ArrayList<>();
+        if (s == null)
+            return allPossibleStates;
+        Position currentPosition = (Position) s.getCurrentPos();
+        Position up = new Position(currentPosition.getRowIndex() - 1, currentPosition.getColumnIndex());
+        Position down = new Position(currentPosition.getRowIndex() + 1, currentPosition.getColumnIndex());
+        Position right = new Position(currentPosition.getRowIndex(), currentPosition.getColumnIndex() + 1);
+        Position left = new Position(currentPosition.getRowIndex(), currentPosition.getColumnIndex() - 1);
+        Position upRight = new Position(currentPosition.getRowIndex() - 1, currentPosition.getColumnIndex() + 1);
+        Position downRight = new Position(currentPosition.getRowIndex() + 1, currentPosition.getColumnIndex() + 1);
+        Position upLeft = new Position(currentPosition.getRowIndex() - 1, currentPosition.getColumnIndex() - 1);
+        Position downLeft = new Position(currentPosition.getRowIndex() + 1, currentPosition.getColumnIndex() - 1);
+
+        //straight steps
+
+        //up
+        if (maze.isValidPosition(up) && maze.getValue(up) == 0)
+            allPossibleStates.add(new MazeState(up, s.getCost() + 10, s));
+
+        //down
+        if (maze.isValidPosition(down) && maze.getValue(down) == 0)
+            allPossibleStates.add(new MazeState(down, s.getCost() + 10, s));
+        //left
+        if (maze.isValidPosition(left) && maze.getValue(left) == 0)
+            allPossibleStates.add(new MazeState(left, s.getCost() + 10, s));
+        //right
+        if (maze.isValidPosition(right) && maze.getValue(right) == 0)
+            allPossibleStates.add(new MazeState(right, s.getCost() + 10, s));
+
+        //diagonal steps
+
+        //upRight
+        if (maze.isValidPosition(upRight) && maze.isValidPosition(up) && maze.isValidPosition(right) && maze.getValue(upRight) == 0 && (maze.getValue(up) == 0 || maze.getValue(right) == 0))
+            allPossibleStates.add(new MazeState(upRight, s.getCost() + 15, s));
+        //upLeft
+        if (maze.isValidPosition(upLeft) && maze.isValidPosition(up) && maze.isValidPosition(left) && maze.getValue(upLeft) == 0 && (maze.getValue(up) == 0 || maze.getValue(left) == 0))
+            allPossibleStates.add(new MazeState(upLeft, s.getCost() + 15, s));
+        //downRight
+        if (maze.isValidPosition(downRight) && maze.isValidPosition(down) && maze.isValidPosition(right) && maze.getValue(downRight) == 0 && (maze.getValue(down) == 0 || maze.getValue(right) == 0))
+            allPossibleStates.add(new MazeState(downRight, s.getCost() + 15, s));
+        //downLeft
+        if (maze.isValidPosition(downLeft) && maze.isValidPosition(down) && maze.isValidPosition(left) && maze.getValue(downLeft) == 0 && (maze.getValue(down) == 0 || maze.getValue(left) == 0))
+            allPossibleStates.add(new MazeState(downLeft, s.getCost() + 15, s));
+
+        return allPossibleStates;
     }
 }

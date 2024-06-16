@@ -22,7 +22,7 @@ public abstract class AMazeGenerator implements IMazeGenerator {
      */
     protected void validateInput(int rows, int columns) {
         if (rows <= 0 || columns <= 0) {
-            throw new IllegalArgumentException("Rows and columns must be greater than zero.");
+            System.out.println("Rows and columns must be greater than zero.");
         }
     }
 
