@@ -9,9 +9,9 @@ import java.util.Stack;
 public class MyMazeGenerator extends AMazeGenerator {
 
     /**
-     * Override of generate function - returns an instance of Maze using DFS algorithm.
+     * Generates a maze using the DFS algorithm.
+     * @return A Maze object representing the generated maze.
      */
-
     @Override
     public Maze generate(int rows, int columns) {
         if (rows < 1 || columns < 1) {
@@ -61,10 +61,14 @@ public class MyMazeGenerator extends AMazeGenerator {
         return newMaze;
     }
 
+    /**
+     * Gets the unvisited neighbors of the current position in the maze.
+     * @return A list of unvisited neighbor positions.
+     */
     private List<Position> getUnvisitedNeighbors(Maze maze, Position current) {
+        List<Position> neighbors = new ArrayList<>();
         int row = current.getRowIndex();
         int col = current.getColumnIndex();
-        List<Position> neighbors = new ArrayList<>();
 
         // Check right neighbor
         if (col + 2 < maze.getColumns() && maze.getMaze()[row][col + 2] == 1) {
@@ -87,7 +91,8 @@ public class MyMazeGenerator extends AMazeGenerator {
     }
 
     /**
-     * Connect boundary cells to ensure all parts of the maze are reachable.
+     * Connects boundary cells to ensure all parts of the maze are reachable.
+     * @param maze The maze object.
      */
     private void connectBoundaryCells(Maze maze) {
         int rows = maze.getRows();
@@ -136,7 +141,8 @@ public class MyMazeGenerator extends AMazeGenerator {
     }
 
     /**
-     * Add random walls or paths (only instead 1 - not damage the path we created).
+     * @param maze The maze object.
+     * Adds random walls or paths in the maze without damaging the created path.
      */
     private void addRandomPathsAndWalls(Maze maze) {
         Random random = new Random();
@@ -152,7 +158,9 @@ public class MyMazeGenerator extends AMazeGenerator {
     }
 
     /**
-     * Function to ensure that there is a path to the end point.
+     * Ensures that there is a path to the end point of the maze.
+     * @param maze The maze object.
+     * @param end The goal position of the maze.
      */
     private void ensureEndPath(Maze maze, Position end) {
         int endRow = end.getRowIndex();
@@ -173,7 +181,10 @@ public class MyMazeGenerator extends AMazeGenerator {
     }
 
     /**
-     * Boolean function to check if position is valid.
+     * Checks if the given position is valid within the maze boundaries.
+     * @param maze The maze object.
+     * @param position The position to check.
+     * @return True if the position is valid, false otherwise.
      */
     private boolean isValidPosition(Maze maze, Position position) {
         int row = position.getRowIndex();

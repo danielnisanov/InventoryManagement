@@ -2,7 +2,8 @@ package algorithms.mazeGenerators;
 
 public class EmptyMazeGenerator extends AMazeGenerator{
     /**
-     override of generate function - returns an instance of an empty Maze
+     * Overrides the generate function to return an instance of an empty Maze.
+     * @return A Maze object representing the generated empty maze.
      */
     @Override
     public Maze generate (int rows, int columns) {
@@ -18,5 +19,4 @@ public class EmptyMazeGenerator extends AMazeGenerator{
         }
         return newMaze;
     }
-
 }
