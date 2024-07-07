@@ -5,11 +5,13 @@ import java.io.OutputStream;
 
 public class SimpleCompressorOutputStream extends OutputStream {
     private OutputStream out;
-    private int lastByte = -1;
-    private int count = 0;
+    private int lastByte;
+    private int count;
 
     public SimpleCompressorOutputStream(OutputStream out) {
         this.out = out;
+        this.lastByte = -1;
+        this.count = 0;
     }
 
     @Override
