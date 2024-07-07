@@ -1,4 +1,6 @@
 package algorithms.mazeGenerators;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 /**
  * Represents a maze with a grid of cells, start position, and goal position.
@@ -24,6 +26,22 @@ public class Maze {
             this.maze = new int[rows][columns];
             this.startPosition = new Position(0, 0);
             this.goalPosition = new Position(rows - 1, columns - 1);
+        }
+    }
+
+    public Maze(byte[] byteArray) {
+        ByteBuffer buffer = ByteBuffer.wrap(byteArray);
+
+        this.rows = buffer.getInt();
+        this.columns = buffer.getInt();
+        this.startPosition = new Position(buffer.getInt(), buffer.getInt());
+        this.goalPosition = new Position(buffer.getInt(), buffer.getInt());
+        this.maze = new int[rows][columns];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                this.maze[i][j] = buffer.get();
+            }
         }
     }
 
@@ -220,5 +238,57 @@ public class Maze {
      */
     public void setGoalPosition(Position goalPosition) {
         this.goalPosition = goalPosition;
+    }
+
+    /**
+     * Converts the maze to a byte array.
+     * @return a byte array representing the maze.
+     */
+    public byte[] toByteArray() {
+        int size = 4 + 4 + 4 + 4 + 4 + 4 + (rows * columns);
+        ByteBuffer buffer = ByteBuffer.allocate(size);
+
+        buffer.putInt(rows);
+        buffer.putInt(columns);
+        buffer.putInt(startPosition.getRowIndex());
+        buffer.putInt(startPosition.getColumnIndex());
+        buffer.putInt(goalPosition.getRowIndex());
+        buffer.putInt(goalPosition.getColumnIndex());
+
+        for (int[] row : maze) {
+            for (int cell : row) {
+                buffer.put((byte) cell);
+            }
+        }
+
+        return buffer.array();
+    }
+
+    /**
+     * Creates a Maze from a byte array.
+     * @param byteArray the byte array representing a maze.
+     * @return a Maze object.
+     */
+    public static Maze fromByteArray(byte[] byteArray) {
+        ByteBuffer buffer = ByteBuffer.wrap(byteArray);
+
+        int rows = buffer.getInt();
+        int columns = buffer.getInt();
+        Position startPosition = new Position(buffer.getInt(), buffer.getInt());
+        Position goalPosition = new Position(buffer.getInt(), buffer.getInt());
+
+        int[][] maze = new int[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                maze[i][j] = buffer.get();
+            }
+        }
+
+        Maze m = new Maze(rows, columns);
+        m.startPosition = startPosition;
+        m.goalPosition = goalPosition;
+        m.maze = maze;
+
+        return m;
     }
 }
