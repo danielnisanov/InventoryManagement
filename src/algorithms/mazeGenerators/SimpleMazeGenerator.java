@@ -42,7 +42,6 @@ public class SimpleMazeGenerator extends AMazeGenerator {
         for (int row = 0; row < newMaze.getGoalPosition().getRowIndex(); row++) {
             newMaze.setZero(row, columns - 1);
         }
-
         return newMaze;
     }
 }
