@@ -45,6 +45,14 @@ public class Maze {
         }
     }
 
+    public static int getMazeByteArrayLength(byte[] compressedMaze) {
+        ByteBuffer buffer = ByteBuffer.wrap(compressedMaze);
+        int rows = buffer.getInt();
+        int columns = buffer.getInt();
+        int size = 4 + 4 + 4 + 4 + 4 + 4 + (rows * columns);
+        return size;
+    }
+
     /**
      * Gets the start position of the maze.
      *
