@@ -19,6 +19,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
     @Override
     public void serverStrategy(InputStream inFromClient, OutputStream outToClient) throws IOException {
 
+        //option1
 //          try {
 //            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 //            MyDecompressorInputStream decompressor = new MyDecompressorInputStream(inFromClient);
@@ -53,6 +54,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
 //            e.printStackTrace();
 //        }
 
+        //option2
         //////////////////////////////////////////////////////////////////
 
 //        try (ObjectInputStream in = new ObjectInputStream(inFromClient);
