@@ -14,10 +14,6 @@ public class RunCompressDecompressMaze {
         AMazeGenerator mazeGenerator = new MyMazeGenerator();
         Maze maze = mazeGenerator.generate(100, 100); //Generate new maze
 
-        // Size of the maze in cells (houses)
-        int mazeSizeInCells = maze.getRows() * maze.getColumns();
-        System.out.println("Size of the maze in cells: " + mazeSizeInCells);
-
         try {
             // save maze to a file
             OutputStream out = new MyCompressorOutputStream(new FileOutputStream(mazeFileName));
@@ -25,15 +21,6 @@ public class RunCompressDecompressMaze {
             out.write(maze.toByteArray());
             out.flush();
             out.close();
-
-            // Size of the maze in its most economical byte array representation
-            int mazeSizeInBytes = mazeBytes.length;
-            System.out.println("Size of the maze in byte array representation: " + mazeSizeInBytes);
-
-            // Size of the saved file in bytes
-            File mazeFile = new File(mazeFileName);
-            long fileSizeInBytes = mazeFile.length();
-            System.out.println("Size of the saved file in bytes: " + fileSizeInBytes);
         }
         catch (IOException e) {
             e.printStackTrace();

@@ -20,12 +20,15 @@ public class Configurations {
 
     private Configurations() {
         properties = new Properties();
-        //FIXME לשנות נתיב
-        try (InputStream input = new FileInputStream("resources/properties.config")) {
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                System.out.println("Sorry, unable to find config.properties");
+                return;
+            }
             properties.load(input);
         }
-        catch (IOException e) {
-            e.printStackTrace();
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

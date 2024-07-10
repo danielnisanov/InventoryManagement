@@ -16,25 +16,21 @@ public class Server {
     private boolean stop;
     private ExecutorService threadPool;
 
-    public Server(int port, int listenInMS, IServerStrategy strategy) {
+    public Server(int port, int listenInMS, IServerStrategy strategy){
         this.port = port;
         this.strategy = strategy;
         this.listenInMS = listenInMS;
         this.stop = false;
-        private ExecutorService threadPool;
-    }
-
-    public Server(int port, int listenInMS, IServerStrategy strategy) throws IOException {
-        this.port = port;
-        this.strategy = strategy;
-        this.listenInMS = listenInMS;
-        this.stop = false;
-        try (InputStream input = new FileInputStream("resources/config.properties")) {
+        // Initialize thread pool size from configurations
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
             Properties prop = new Properties();
             prop.load(input);
-            int sizeOfThreadPool = Integer.parseInt(prop.getProperty("threadPoolSize"));
+            int sizeOfThreadPool = Integer.parseInt(prop.getProperty("threadPoolSize", "4")); // Default size is 4
             this.threadPool = Executors.newFixedThreadPool(sizeOfThreadPool);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+            // Fallback to default thread pool size if reading properties fails
             this.threadPool = Executors.newFixedThreadPool(4); // Default size
         }
     }

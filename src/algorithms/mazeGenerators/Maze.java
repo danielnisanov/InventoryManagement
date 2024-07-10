@@ -1,11 +1,12 @@
 package algorithms.mazeGenerators;
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 /**
  * Represents a maze with a grid of cells, start position, and goal position.
  */
-public class Maze {
+public class Maze implements Serializable {
     private int rows;
     private int columns;
     private Position startPosition;
