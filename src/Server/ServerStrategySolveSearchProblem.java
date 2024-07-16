@@ -19,68 +19,6 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
     @Override
     public void serverStrategy(InputStream inFromClient, OutputStream outToClient) throws IOException {
 
-        //option1
-//          try {
-//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//            MyDecompressorInputStream decompressor = new MyDecompressorInputStream(inFromClient);
-//            decompressor.read(byteArrayOutputStream.toByteArray());
-//
-//            Maze maze = new Maze(byteArrayOutputStream.toByteArray());
-//
-//            String tempDirectoryPath = System.getProperty("java.io.tmpdir");
-//            String mazeFileName = tempDirectoryPath + "/" + maze.hashCode() + ".maze";
-//            Path mazeFilePath = Paths.get(mazeFileName);
-//
-//            Solution solution;
-//            if (Files.exists(mazeFilePath)) {
-//                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(mazeFileName));
-//                solution = (Solution) objectInputStream.readObject();
-//                objectInputStream.close();
-//            }
-//            else {
-//                ASearchingAlgorithm searcher = new BestFirstSearch();
-//                solution = searcher.solve(new SearchableMaze(maze));
-//
-//                ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(mazeFileName));
-//                objectOutputStream.writeObject(solution);
-//                objectOutputStream.flush();
-//                objectOutputStream.close();
-//            }
-//            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outToClient);
-//            objectOutputStream.writeObject(solution);
-//            objectOutputStream.flush();
-//        }
-//        catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-
-        //option2
-        //////////////////////////////////////////////////////////////////
-
-//        try (ObjectInputStream in = new ObjectInputStream(inFromClient);
-//             ObjectOutputStream out = new ObjectOutputStream(outToClient)) {
-//
-//            // Read maze from client
-//            Maze maze = (Maze) in.readObject();
-//
-//            // Get temporary directory path
-//            String tempDirectoryPath = System.getProperty("java.io.tmpdir");
-//            String mazePath = tempDirectoryPath + "maze" + maze.toString();
-//
-//            Solution solution = getSolution(maze, mazePath);
-//
-//            // Send solution back to client
-//            out.writeObject(solution);
-//            out.flush();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//            throw new IOException("Error in reading client data", e);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new IOException("Error in solving maze or handling file", e);
-//        }
-
-        //////////////////////////////////////////////////
         try (ObjectInputStream in = new ObjectInputStream(inFromClient);
              ObjectOutputStream out = new ObjectOutputStream(outToClient)) {
 
